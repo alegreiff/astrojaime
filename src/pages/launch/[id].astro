@@ -4,6 +4,8 @@ import { getLaunchById } from "../../services/space-x"
 import Layout from "../../layouts/Layout.astro";
 import { getLatestLaunches } from "../../services/space-x";
 
+export const prerender = false
+
 const {id} = Astro.params
 let launch = null;
 if(id) {
@@ -21,9 +23,12 @@ console.log(id)
 } */
 
 ---
-<Layout title="Detalles de la nave">
-  <article class="text-white">
-    <p>{launch?.details  } {launch?.id}</p>
-    <img src={launch?.links.patch.small} alt="IMAGOS">
+<Layout title=`Detalles de la nave ${id}`>
+  <article class="text-white bg-pink-800 m-4 p-8">
+        <img src={launch?.links.patch.small} alt="IMAGOS">
+        <h2 class="text-4xl text-white font-bold">
+          Launch # {launch?.flight_number}
+        </h2>
+        <p class="text-lg ">{launch?.details}</p>
   </article>
   </Layout> 
