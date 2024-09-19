@@ -1,0 +1,49 @@
+---
+import { type ApiSpace} from '../types/api'
+import {type Retina }  from '../types/retina'
+import CardLaunch from './CardLaunch.astro';
+
+const retina = await fetch("https://retinalatina.org/wp-json/retinadata/v1/data/series")
+
+
+
+
+const res = await fetch("https://api.spacexdata.com/v5/launches/query", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    query: {},
+    sort: {
+      date_unix: "asc"
+    },
+    limit: 3
+  })
+});
+const { docs: launches } = await res.json() as ApiSpace;
+const { peliculas } = await retina.json() as Retina;
+console.log("BARAKUNATANA");
+---
+<div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+
+{
+  peliculas.map((pelicula)=> (
+    <h2 class="bg-amber-400 p-4 text-pink-800 font-bold">{pelicula.nombre}</h2>
+  ))
+}
+
+<!-- {
+  launches.map(({ links, flight_number, details, id, success}) => (
+  <CardLaunch 
+  id={id} 
+   img={links.patch.small} 
+   details={details}
+   flightNumber={flight_number}
+   success={success}
+   
+   />
+    
+))
+} -->
+</div>
