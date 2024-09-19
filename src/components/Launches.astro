@@ -29,7 +29,17 @@ console.log("o");
 
 {
   peliculas.map((pelicula)=> (
-    <h2 class="bg-amber-400 p-4 text-pink-800 font-bold">{pelicula.nombre}</h2>
+    <h2 
+    class:list={
+      [
+        " p-4  font-bold", {
+          "bg-green-400 text-green-800":  pelicula.datos.activa,
+          "bg-red-400 text-red-800": !pelicula.datos.activa
+        }
+        
+      ]
+    }
+    >{pelicula.nombre}</h2>
   ))
 }
 
