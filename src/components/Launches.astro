@@ -1,9 +1,12 @@
 ---
 
-import {type Retina }  from '../types/retina'
+import {type Retina, type DatoRetina }  from '../types/retina'
 import CardLaunch from './CardLaunch.astro';
 import { getLatestLaunches } from '../services/space-x'
 const retina = await fetch("https://retinalatina.org/wp-json/retinadata/v1/data/series")
+
+const yuka = await fetch("https://script.google.com/macros/s/AKfycbxZmC2C0YhOEj427LinH-SnKBRZVKt7kNhUK8R8tOx6Bm9MK168RXeaApp3AZ0-iRrd/exec")
+
 
 
 const launches = await getLatestLaunches();
@@ -11,11 +14,18 @@ const launches = await getLatestLaunches();
 
 
 const { peliculas } = await retina.json() as Retina;
-
+const {  datos } = await yuka.json() as DatoRetina
 ---
 <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
 
 {
+  datos.map((film) => (
+   <h4 class="bg-sky-800 text-white p-4">{ film.titulo }</h4> 
+  ))
+}
+
+
+<!-- {
   peliculas.map((pelicula)=> (
     <h2 
     class:list={
@@ -29,9 +39,9 @@ const { peliculas } = await retina.json() as Retina;
     }
     >{pelicula.nombre}</h2>
   ))
-}
+} -->
 
-{
+<!-- {
   launches.map(({ links, flight_number, details, id, success}) => (
   <CardLaunch 
   id={id} 
@@ -43,5 +53,6 @@ const { peliculas } = await retina.json() as Retina;
    />
     
 ))
-}
+} -->
 </div>
+
