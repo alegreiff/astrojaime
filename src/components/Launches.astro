@@ -1,29 +1,17 @@
 ---
-import { type ApiSpace} from '../types/api'
+
 import {type Retina }  from '../types/retina'
 import CardLaunch from './CardLaunch.astro';
-
+import { getLatestLaunches } from '../services/space-x'
 const retina = await fetch("https://retinalatina.org/wp-json/retinadata/v1/data/series")
 
 
+const launches = await getLatestLaunches();
 
 
-const res = await fetch("https://api.spacexdata.com/v5/launches/query", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    query: {},
-    sort: {
-      date_unix: "asc"
-    },
-    limit: 3
-  })
-});
-const { docs: launches } = await res.json() as ApiSpace;
+
 const { peliculas } = await retina.json() as Retina;
-console.log("o");
+
 ---
 <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
 
@@ -43,7 +31,7 @@ console.log("o");
   ))
 }
 
-<!-- {
+{
   launches.map(({ links, flight_number, details, id, success}) => (
   <CardLaunch 
   id={id} 
@@ -55,5 +43,5 @@ console.log("o");
    />
     
 ))
-} -->
+}
 </div>

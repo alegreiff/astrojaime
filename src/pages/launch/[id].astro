@@ -1,0 +1,29 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getLaunchById } from "../../services/space-x"
+import Layout from "../../layouts/Layout.astro";
+import { getLatestLaunches } from "../../services/space-x";
+
+const {id} = Astro.params
+let launch = null;
+if(id) {
+  launch = await getLaunchById({id});  
+}
+console.log(id)
+
+/* export async function getStaticPaths() {
+  const launches = await getLatestLaunches();
+  return launches.map((launch) => ({
+    params: {id: launch.id}
+  }))
+  
+  
+} */
+
+---
+<Layout title="Detalles de la nave">
+  <article class="text-white">
+    <p>{launch?.details  } {launch?.id}</p>
+    <img src={launch?.links.patch.small} alt="IMAGOS">
+  </article>
+  </Layout> 
